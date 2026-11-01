@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [visualization, matplotlib, png, charts, telegram]
+    tags: [visualization, matplotlib, images, charts]
 ---
 
 # Analytics Visual Skill
@@ -17,6 +17,14 @@ metadata:
 Use at the presentation stage for verified results: when asked for a chart, or when comparisons, trends, ranges, or a dense summary become clearer visually. Choose a chart, visual/plain table, or text to suit the question. Numbers alone do not require an image; a precise table may be easier to search and copy. Fulfill an explicit chart request even for a small example.
 
 This skill does not collect data or choose calculation methodology. Obtain and verify the results with domain tools first; do not change methodology to make a convenient chart. Show substantive results, not decorative KPIs or data coverage alone.
+
+## Platform tools and delivery
+
+Use the host agent's available tools, not literal tool names from another platform. In Hermes use `terminal`, `read_file` and `vision_analyze`; in Claude Code use Bash and Read (including image reading); in OpenClaw or Codex use the available shell, file-reading and image-viewing tools. Resolve `<skill-dir>` to this installed package and `<scratch-dir>` to a writable task/scratch directory. Do not assume Hermes paths on other hosts.
+
+The deliverable is a ready-to-view raster image (PNG or JPEG), not only code, SVG or HTML requiring a separate rendering step. Use the user's requested format; prefer PNG for crisp text when no format is specified. Inspect the exported file using the host's image viewer. If image inspection is unavailable, say that visual verification remains pending; do not claim to have inspected it.
+
+Attach the image using the current platform's supported attachment mechanism, or provide its accessible local path when attachments are unavailable. Hermes `MEDIA:<absolute-path>` is only for Hermes surfaces that support it, not a universal protocol. Telegram is one possible destination, not a requirement; do not assume Codex or Claude Code has messenger delivery.
 
 ## Style and execution
 
@@ -58,10 +66,10 @@ Replace placeholders with actual paths. Immutable tokens contain background, pan
 
 1. Check numbers, units, period, base and limitations. If analysis is unfinished, return to it. Rendering checks do not validate domain calculations.
 2. Choose a format preserving all material metrics and identifiers. Optionally read `references/chart-guidelines.md` for additional forms/scales; the core rules above are self-contained.
-3. Create a short Python script in managed scratch using direct Matplotlib, backend `Agg`, and Unicode-capable fonts. No Seaborn, browser, ImageGen or server. If Matplotlib is unavailable, use `uv run --no-project --with matplotlib python "<script>"`. Do not store customer data permanently in the skill.
-4. Save PNG and script together; close figures. Split dense results only to preserve readability and content.
-5. Check numbers/completeness with code and inspect the actual final PNG with `vision_analyze`: color meaning, conclusions, units, separated fields, labels/Unicode, scales, readability, contrast, margins, completeness and cropping. A clipping-only check is insufficient. Fix before delivery.
-6. Send `MEDIA:<absolute-path>` with a brief explanation of notation. Do not repeat the entire report; supply the source table/code on request.
+3. Create a short Python script in a writable task/scratch directory using direct Matplotlib, backend `Agg`, and Unicode-capable fonts. No Seaborn, browser, ImageGen or server. If Matplotlib is unavailable and `uv` is installed, use `uv run --no-project --with matplotlib python "<script>"`; otherwise use an environment with Matplotlib or report the missing prerequisite. Do not store customer data permanently in the skill.
+4. Save the PNG or JPEG and script together; close figures. Matplotlib selects the format from `.png`, `.jpg` or `.jpeg`. For JPEG use an opaque background and sufficient quality to keep labels legible. Split dense results only to preserve readability and content.
+5. Check numbers/completeness with code and inspect the actual final PNG or JPEG using the platform's image-viewing tool: color meaning, conclusions, units, separated fields, labels/Unicode, scales, readability, contrast, margins, completeness and cropping. A clipping-only check is insufficient. Fix before delivery.
+6. Attach the image or provide its accessible local path as described above, with a brief explanation of notation. Do not repeat the entire report; supply the source table/code on request.
 
 Synthetic gallery: `uv run --no-project --with matplotlib --with pillow python "<skill-dir>/scripts/style_gallery.py" --output "<scratch-dir>/style-gallery"`.
 
