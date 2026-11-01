@@ -1,71 +1,45 @@
-# Better Charts Skill
+# Analytics Visual Skill
 
-Data visualization guidelines and styles for AI agents.
+![Analytics Visual Skill](docs/banner.png)
 
-## Install in Hermes
+Agent skill for designing data visualization with clear visual narrative.
 
-```bash
-hermes skills install tim-toothed/better-charts-skill/skills/analytical-visualization --category data-science --yes
-```
+Guides agents through choosing charts, arranging layouts, and connecting findings into visual reports. Exports PNG images for sharing in Telegram and other messengers.
 
-The repository is named **better-charts-skill**; the installable skill retains the name **analytical-visualization** and description `Create data visualization.` No credentials or service configuration are needed.
-
-Optional discovery:
+## Install
 
 ```bash
-hermes skills tap add tim-toothed/better-charts-skill
-hermes skills search visualization --source github
+hermes skills install tim-toothed/analytics-visual-skill/skills/analytics-visual --category data-science --yes
 ```
 
-## What it does
+Then ask your agent to use **Analytics Visual Skill** when preparing a report or visualization.
 
-- Chooses charts, tables or text to match the question, not a fixed dashboard template.
-- Keeps units, comparison bases, missing values, uncertainty and qualifiers visible.
-- Separates positive/negative direction from good/bad judgments.
-- Provides nine deterministic Matplotlib presets and immutable semantic color tokens.
-- Requires inspection of the actual exported image, not just a successful render.
+## Highlights
 
-It presents already verified results. It is not a data collector, calculation engine or substitute for domain validation. Other agents can read `skills/analytical-visualization/SKILL.md` and use the accompanying scripts; Hermes-specific delivery/tool names need adaptation to their own runtime.
+- **Visual storytelling.** Organize findings into a visual narrative the reader can follow.
+- **Chart selection.** Choose charts for trends, comparisons, distributions, relationships, and composition.
+- **Layout.** Arrange charts and annotations into dashboards and visual reports.
+- **Nine styles.** Matplotlib presets with light, dark, muted, and high-contrast options.
+- **PNG output.** Share visualizations directly in Telegram, other messengers, or documents.
 
-## Style gallery
+## Examples
 
-![Nine Matplotlib styles, synthetic data only](docs/gallery.png)
+Nine chart types in nine styles. All examples use synthetic data.
 
-Available: `neutral-light`, `minimal`, `dark`, `high-contrast`, `monochrome`, `muted`, `procvetaev`, `business-blue`, `warm`.
+![Nine chart types in nine styles](docs/gallery.png)
 
-The distributed preference is **not selected**. `neutral-light` is a neutral temporary fallback until the user chooses a style. All previews use invented data and generic labels. The procvetaev template includes its authorized motif, #C40123 localized gradient, and TikTok Sans OFL fonts. The other eight presets use Matplotlib's DejaVu Sans. No private reports or deployment configuration are bundled.
+Available styles: `neutral-light`, `minimal`, `dark`, `high-contrast`, `monochrome`, `muted`, `procvetaev`, `business-blue`, and `warm`.
 
-![Full procvetaev synthetic template](docs/procvetaev-example.png)
+Choose a style with your agent. Until you choose one, the skill uses `neutral-light`.
 
-## Run examples
+## How it works
 
-From a clone, with [uv](https://docs.astral.sh/uv/):
+The skill provides visualization guidelines and Python styling helpers. The agent writes and runs Matplotlib code for your task, then inspects the exported PNG before delivering it.
 
-```bash
-uv run --no-project --with matplotlib python skills/analytical-visualization/scripts/example.py --output example.png
-uv run --no-project --with matplotlib --with pillow python skills/analytical-visualization/scripts/style_gallery.py --output gallery
-uv run --no-project --with matplotlib python skills/analytical-visualization/scripts/procvetaev_example.py --output procvetaev-example.png
-```
+Requires Python and Matplotlib. The skill includes instructions for running with `uv` when Matplotlib is not installed.
 
-Alternatively install `matplotlib` and `pillow` in your own virtual environment. No system-wide installation is required. Scripts use the headless `Agg` backend. Import `apply_style`, `style_context`, and `delta_color` from the bundled `chart_styles.py` before creating figures; see SKILL.md for the API example. Presets reset rcParams; `style_context` restores the previous settings.
-
-## Layout
-
-```text
-README.md
-LICENSE
-docs/gallery.png
-skills/analytical-visualization/
-  SKILL.md
-  references/chart-guidelines.md
-  scripts/chart_styles.py
-  scripts/style_gallery.py
-  scripts/example.py
-  scripts/procvetaev_example.py
-  references/asset-provenance.md
-  assets/  # stylesheet, authorized motif and OFL fonts
-```
+Other agents can use the [skill instructions](skills/analytics-visual/SKILL.md) and bundled scripts, adapting tool calls to their own environment.
 
 ## License
 
-MIT. Author: [tim-toothed](https://github.com/tim-toothed). The public bundle is a portable edition of the 0.4.0 skill, without private operational notes or deployment configuration. Third-party stylesheet attribution and the separate OFL font license are documented in [asset provenance](skills/analytical-visualization/references/asset-provenance.md). The supplied template motif is publicly distributed with the publisher's explicit authorization.
+[MIT](LICENSE). Third-party asset and font terms are listed in [asset provenance](skills/analytics-visual/references/asset-provenance.md).

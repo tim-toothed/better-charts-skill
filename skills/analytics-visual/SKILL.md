@@ -1,5 +1,5 @@
 ---
-name: analytical-visualization
+name: analytics-visual
 description: Create data visualization.
 version: 0.4.0
 author: tim-toothed
@@ -10,7 +10,7 @@ metadata:
     tags: [visualization, matplotlib, png, charts, telegram]
 ---
 
-# Analytical visualization
+# Analytics Visual Skill
 
 ## When to use
 
@@ -67,4 +67,4 @@ Synthetic gallery: `uv run --no-project --with matplotlib --with pillow python "
 
 Synthetic example (not a mandatory template): `uv run --no-project --with matplotlib python "<skill-dir>/scripts/example.py" --output "<scratch-dir>/example.png"`.
 
-Full synthetic procvetaev template: `uv run --no-project --with matplotlib python "<skill-dir>/scripts/procvetaev_example.py" --output "<scratch-dir>/procvetaev-example.png"`.
+
